@@ -5197,7 +5197,7 @@ dmi_codes_major *find_dmiMajor(const struct dmi_header *h)
         return NULL;
 }
 
-static void dmi_table(Log_t *logp, int type, u32 base, u16 len, u16 num, u16 ver, const char *devmem, u32 flags, xmlNode *xmlnode)
+static void dmi_table(Log_t *logp, int type, u32 base, u32 len, u16 num, u32 ver, const char *devmem, u32 flags, xmlNode *xmlnode)
 {
         static u8 version_added = 0;
         u8 *buf;
@@ -5250,7 +5250,7 @@ static void dmi_table(Log_t *logp, int type, u32 base, u16 len, u16 num, u16 ver
         }
 
 	data = buf;
-	while(i < num && data + 4 <= buf + len) {       /* 4 is the length of an SMBIOS structure header */
+	while((i < num||!num) && data + 4 <= buf + len) {       /* 4 is the length of an SMBIOS structure header */
                 u8 *next;
                 struct dmi_header h;
 
